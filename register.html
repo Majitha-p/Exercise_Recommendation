@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(241, 234, 241);
+    margin: 0;
+    padding: 0;
+    
+}
+label[for="mobile"] {
+            display: block;
+            margin-bottom: 5px;
+            color: #080808;
+            
+        }
+
+        input[type="tel"] {
+            width: 50%;
+            margin-left: 100px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+.container {
+    width: 60%;
+    margin: 20px auto;
+    
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.registration-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+    
+    width: 50%;
+    padding: 8px;
+    border-radius: 4px;
+    margin-left: 100px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+    </style>
+    <script>
+        function calculateAge(dob) {
+            var dobDate = new Date(dob);
+            var today = new Date();
+            var age = today.getFullYear() - dobDate.getFullYear();
+            var monthDiff = today.getMonth() - dobDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+                age--;
+            }
+            document.getElementById('age').innerText = age;
+        }
+    </script>
+
+</head>
+<body>
+    <h2>User Registration</h2>
+    <div class="registration-form">
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+        
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+        
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br><br>
+        
+        <label for="username">username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" title="Please enter a 10-digit mobile number" required><br><br>
+       
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" onchange="calculateAge(this.value)" required><br><br>
+
+        <label for="age">Age:</label>
+        <span id="age"></span><br><br>
+                
+        {% comment %} <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required><br><br> {% endcomment %}
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>           
+        </select><br><br>
+
+        <label for="weight">Weight (in kg):</label>
+        <input type="number" id="weight" name="weight" required><br><br>
+
+        <label for="usertype">User Type:</label>
+        <select id="usertype" name="usertype">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select><br><br>
+
+        <label for="fitnessgoal">Fitness Goal:</label>
+        <select id="fitnessgoal" name="fitnessgoal">
+            <option value="weightloss">Weight Loss</option>
+            <option value="musclebuilding">Muscle Building</option>
+            <option value="fitness">Fitness</option>
+        </select><br><br>
+
+        <label for="sleepinghours">Sleeping Hours:</label>
+        <input type="radio" id="morethan6" name="sleepinghours" value="morethan6">
+        <label for="morethan6">More than 6 hours</label>
+        <input type="radio" id="lessthan6" name="sleepinghours" value="lessthan6">
+        <label for="lessthan6">Less than 6 hours</label><br><br>
+
+        <label for="diabetes">Diabetes:</label>
+        <input type="checkbox" id="diabetes" name="diabetes" value="True"><br><br>
+
+        <label for="heartdisease">Heart Disease:</label>
+        <input type="checkbox" id="heartdisease" name="heartdisease" value="True"><br><br>
+
+        <label for="allergy">Allergy:</label>
+        <input type="checkbox" id="allergy" name="allergy" value="True"><br><br>
+        
+
+        <label for="surgery">Surgery:</label>
+        <select id="surgery" name="surgery">
+            <option value="Nosurgery">No surgery</option>
+            <option value="minorsurgery">Minor Surgery</option>
+            <option value="majorsurgery2to4">Major Surgery (2-4 months ago)</option>
+            <option value="majorsurgery6">Major Surgery (6 months ago)</option>
+        </select><br><br>
+
+        <label for="injuries">Injuries:</label><br>
+        <input type="checkbox" id="head" name="injuries[]" value="head">
+        <label for="head">Head</label>
+        <input type="checkbox" id="hand" name="injuries[]" value="hand">
+        <label for="hand">Hand</label>
+        <input type="checkbox" id="stomach" name="injuries[]" value="stomach">
+        <label for="stomach">Stomach</label>
+        <input type="checkbox" id="leg" name="injuries[]" value="leg">
+        <label for="leg">Leg</label><br><br>
+
+        <label for="pregnancy">Pregnancy Status:</label>
+        <select id="pregnancy" name="pregnancy">
+            <option value="nopregnant">No</option>
+            <option value="pregnant">Pregnant</option>
+            <option value="postpregnancy">Post Pregnancy</option>
+        </select><br><br>
+
+        <input type="submit" value="Submit">
+    </div>
+    </form>
+
+</body>
+</html>

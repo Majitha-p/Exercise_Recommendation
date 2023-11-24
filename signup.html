@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+    </style>
+    
+    <script>
+        function validateForm() {
+    // Check if passwords match
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirm_password").value;
+    if (password != confirmPassword) {
+        showToast("Passwords do not match");
+        return false;
+    }
+
+    // Check if password length is at least 6 characters
+    if (password.length < 6) {
+        showToast("Password should be at least 6 characters long");
+        return false;
+    }
+
+    return true;
+}
+
+function checkPasswordStrength() {
+    var password = document.getElementById("password").value;
+    var strengthIndicator = document.getElementById("password-strength");
+
+    // Password strength check logic (you can modify this as needed)
+    if (password.length == 0) {
+        strengthIndicator.innerHTML = "";
+    } else if (password.length < 6) {
+        strengthIndicator.innerHTML = "Weak";
+        strengthIndicator.style.color = "red";
+    } else if (password.length < 10) {
+        strengthIndicator.innerHTML = "Medium";
+        strengthIndicator.style.color = "orange";
+    } else {
+        strengthIndicator.innerHTML = "Strong";
+        strengthIndicator.style.color = "green";
+    }
+}
+
+function checkPasswordMatch() {
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirm_password").value;
+    var matchIndicator = document.getElementById("password-match");
+
+    // Password match check logic
+    if (password === confirmPassword) {
+        matchIndicator.innerHTML = "";
+    } else {
+        matchIndicator.innerHTML = "Passwords do not match";
+        matchIndicator.style.color = "red";
+    }
+}
+
+function showToast(message) {
+    // Logic to display toast message
+    alert(message); // Replace this with your preferred toast library or custom implementation
+}
+
+    </script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div style="color: red;">
+            {% if message %}
+            {{message}}
+            {% endif %}
+        </div>
+        <form action="#" method="post" class="signup-form" onsubmit="return validateForm()">
+            {% csrf_token %}
+            
+            
+        
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" onkeyup="checkPasswordStrength()" required>
+                <div id="password-strength"></div>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" onkeyup="checkPasswordMatch()" required>
+                <div id="password-match"></div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sign Up">
+            </div>
+            
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
